@@ -3,12 +3,9 @@
     :disabled="loading || disabled"
     v-on="$listeners"
   >
-    <template v-if="loading">
-      loading...
-    </template>
-    <template v-else>
+    <app-loading :value="loading">
       <slot />
-    </template>
+    </app-loading>
   </button>
 </template>
 
@@ -21,6 +18,10 @@ export default {
       default: false,
     },
     disabled: {
+      type: Boolean,
+      default: false,
+    },
+    icon: {
       type: Boolean,
       default: false,
     },

@@ -6,11 +6,15 @@
     }"
     @click="$emit('input', !value)"
   >
-    {{ value ? 'x' : '' }}
+    <app-icon v-if="value">
+      {{ mdiCheck }}
+    </app-icon>
   </div>
 </template>
 
 <script>
+import { mdiCheck } from '@mdi/js';
+
 export default {
   name: 'AppCheckbox',
   props: {
@@ -23,6 +27,9 @@ export default {
       default: false,
     },
   },
+  data: () => ({
+    mdiCheck,
+  }),
 };
 </script>
 

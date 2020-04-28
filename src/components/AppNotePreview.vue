@@ -74,6 +74,8 @@ export default {
 
 <style lang="sass" scoped>
 .app-note-preview
+  &__title
+    font-size: 16px
   // padding: 8px 16px
   &__todo + *
     margin-top: 8px

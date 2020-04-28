@@ -1,7 +1,15 @@
 <template>
   <div class="note-editor">
     <div class="pa-4 d-flex align-center">
-      <div class="flex-grow-1 title">
+      <router-link :to="{ name: 'home' }">
+        <app-button>
+          <app-icon>
+            {{ mdiArrowLeft }}
+          </app-icon>
+        </app-button>
+      </router-link>
+
+      <div class="flex-grow-1 title ml-2">
         Редактирование заметки
       </div>
 
@@ -9,20 +17,18 @@
         :disabled="!isUndoAvailable"
         @click="undo()"
       >
-        undo
+        <app-icon>
+          {{ mdiUndo }}
+        </app-icon>
       </app-button>
       <app-button
         :disabled="!isRedoAvailable"
         @click="redo()"
       >
-        redo
+        <app-icon>
+          {{ mdiRedo }}
+        </app-icon>
       </app-button>
-
-      <router-link :to="{ name: 'home' }">
-        <app-button>
-          вернуться к списку
-        </app-button>
-      </router-link>
     </div>
 
     <hr>
@@ -58,7 +64,9 @@
         <app-button
           @click="note.todos.splice(i, 1), pushSnapshot()"
         >
-          Удалить
+          <app-icon>
+            {{ mdiDelete }}
+          </app-icon>
         </app-button>
       </div>
     </div>
@@ -111,7 +119,9 @@
         <app-button
           @click="confirmRemove = false"
         >
-          крестик
+          <app-icon>
+            {{ mdiClose }}
+          </app-icon>
         </app-button>
       </div>
 
@@ -149,7 +159,9 @@
         <app-button
           @click="confirmCancel = false"
         >
-          крестик
+          <app-icon>
+            {{ mdiClose }}
+          </app-icon>
         </app-button>
       </div>
 
@@ -177,6 +189,13 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import {
+  mdiDelete,
+  mdiRedo,
+  mdiUndo,
+  mdiArrowLeft,
+  mdiClose,
+} from '@mdi/js';
 import AppTodoInput from '@/components/AppTodoInput.vue';
 import AppDialog from '@/components/AppDialog.vue';
 import db from '../db-emulator';
@@ -200,6 +219,12 @@ export default {
 
     isSaving: false,
     isRemoving: false,
+
+    mdiDelete,
+    mdiRedo,
+    mdiUndo,
+    mdiArrowLeft,
+    mdiClose,
   }),
   computed: {
     ...mapGetters([

@@ -1,7 +1,7 @@
 <template>
   <div class="home-view">
     <div class="pa-4 d-flex align-center">
-      <div class="flex-grow-1">
+      <div class="flex-grow-1 title">
         Заметки
       </div>
 
@@ -34,14 +34,19 @@
           <template #actions>
             <router-link :to="{ name: 'edit-note', params: { id: note.id } }">
               <app-button>
-                редактировать
+                <app-icon>
+                  {{ mdiPencil }}
+                </app-icon>
               </app-button>
             </router-link>
 
             <app-button
+              class="ml-2"
               @click="removeId = note.id"
             >
-              удалить
+              <app-icon>
+                {{ mdiDelete }}
+              </app-icon>
             </app-button>
           </template>
         </app-note-preview>
@@ -70,6 +75,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import { mdiDelete, mdiPencil } from '@mdi/js';
 import AppNotePreview from '@/components/AppNotePreview.vue';
 import AppDialog from '@/components/AppDialog.vue';
 import db from '../db-emulator';
@@ -85,6 +91,9 @@ export default {
 
     removeId: null,
     isRemoving: false,
+
+    mdiDelete,
+    mdiPencil,
   }),
   computed: {
     ...mapState([
