@@ -56,15 +56,20 @@
       @input="removeId = null"
     >
       <div class="pa-4 title">
-        Remove {{ removeId }}
+        Подтверждение
+      </div>
+
+      <div class="px-4 text--secondary">
+        Вы уверены, что хотите удалить заметку?
       </div>
 
       <div class="pa-4">
         <app-button
+          warning
           :loading="isRemoving"
           @click="remove()"
         >
-          remove
+          Подтверждаю
         </app-button>
       </div>
     </app-dialog>

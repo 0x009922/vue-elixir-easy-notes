@@ -16,9 +16,6 @@ export default {
     return value
       ? h('app-icon', mergeData(context.data, {
         class: 'app-loading',
-        props: {
-          size: context.props.size,
-        },
       }), [mdiLoading])
       : context.children[0];
   },
