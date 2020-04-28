@@ -1,0 +1,23 @@
+.d-flex
+  display: flex
+
+.align-center
+  align-items: center
+
+.justify-center
+  justify-content: center
+
+.flex-grow-1
+  flex-grow: 1
+
+@for $i from 0 through 12
+  $value: $i * 4px !important
+  @each $long, $short in ('margin': 'm', 'padding': 'p')
+    @each $side-long, $side-short in ('left': 'l', 'right': 'r', 'top': 't', 'bottom': 'b')
+      .#{$short}#{$side-short}-#{$i}
+        #{$long}-#{$side-long}: $value
+    @each $multi-side, $sides in ('y': ['top', 'bottom'], 'x': ['left', 'right'], 'a': ['left', 'right', 'bottom', 'top'])
+      .#{$short}#{$multi-side}-#{$i}
+        @each $side in $sides
+          #{$long}-#{$side}: $value
+
