@@ -34,8 +34,10 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@use '@/assets/colors'
+
 .app-checkbox
-  border: 1px solid black
+  border: 1px solid colors.$primary
   border-radius: 2px
   width: 20px
   height: 20px
@@ -44,6 +46,9 @@ export default {
   justify-content: center
   cursor: pointer
   user-select: none
+
+  &:hover
+    background: transparentize(colors.$primary, 0.9)
 
   &--readonly
     pointer-events: none

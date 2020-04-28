@@ -1,5 +1,6 @@
 <script>
 import { mdiLoading } from '@mdi/js';
+import { mergeData } from 'vue-functional-data-merge';
 
 export default {
   name: 'AppLoading',
@@ -7,15 +8,18 @@ export default {
   props: {
     value: {
       type: Boolean,
-      default: false,
+      default: true,
     },
   },
   render(h, context) {
     const { value } = context.props;
     return value
-      ? h('app-icon', {
+      ? h('app-icon', mergeData(context.data, {
         class: 'app-loading',
-      }, [mdiLoading])
+        props: {
+          size: context.props.size,
+        },
+      }), [mdiLoading])
       : context.children[0];
   },
 };

@@ -1,11 +1,12 @@
 <template>
-  <div class="note-editor">
+  <div class="note-editor card">
     <div class="pa-4 d-flex align-center">
-      <router-link :to="{ name: 'home' }">
-        <app-button>
-          <app-icon>
-            {{ mdiArrowLeft }}
-          </app-icon>
+      <router-link
+        :to="{ name: 'home' }"
+        class="ml-n2"
+      >
+        <app-button icon>
+          {{ mdiArrowLeft }}
         </app-button>
       </router-link>
 
@@ -15,19 +16,19 @@
 
       <app-button
         :disabled="!isUndoAvailable"
+        icon
         @click="undo()"
       >
-        <app-icon>
-          {{ mdiUndo }}
-        </app-icon>
+        {{ mdiUndo }}
       </app-button>
+
       <app-button
         :disabled="!isRedoAvailable"
+        icon
+        class="ml-2"
         @click="redo()"
       >
-        <app-icon>
-          {{ mdiRedo }}
-        </app-icon>
+        {{ mdiRedo }}
       </app-button>
     </div>
 
@@ -62,11 +63,11 @@
           @update-done="todo.done = $event, pushSnapshot()"
         />
         <app-button
+          icon
+          warning
           @click="note.todos.splice(i, 1), pushSnapshot()"
         >
-          <app-icon>
-            {{ mdiDelete }}
-          </app-icon>
+          {{ mdiDelete }}
         </app-button>
       </div>
     </div>
@@ -100,6 +101,7 @@
       <div class="flex-grow-1" />
 
       <app-button
+        warning
         @click="confirmRemove = true"
       >
         Удалить
@@ -113,29 +115,29 @@
         <div
           class="flex-grow-1 title"
         >
-          Удалить?
+          Подтверждение
         </div>
 
         <app-button
+          icon
           @click="confirmRemove = false"
         >
-          <app-icon>
-            {{ mdiClose }}
-          </app-icon>
+          {{ mdiClose }}
         </app-button>
       </div>
 
       <div class="px-4 text--secondary">
-        Если вы удалите, то больше никогда не сможете увидеть эту заметку.
+        Вы уверены, что хотите удалить заметку полностью?
       </div>
 
       <div class="pa-4 d-flex">
         <app-button
           class="mr-2"
           :loading="isRemoving"
+          warning
           @click="remove()"
         >
-          Удалить!
+          Подтверждаю
         </app-button>
 
         <app-button
@@ -153,34 +155,34 @@
         <div
           class="flex-grow-1 title"
         >
-          Отменить изменения?
+          Подтверждение
         </div>
 
         <app-button
+          icon
           @click="confirmCancel = false"
         >
-          <app-icon>
-            {{ mdiClose }}
-          </app-icon>
+          {{ mdiClose }}
         </app-button>
       </div>
 
       <div class="px-4 text--secondary">
-        Если вы отмените изменения, то ваши изменения не будут сохранены!
+        Вы уверены, что хотите отменить изменения?
       </div>
 
       <div class="pa-4 d-flex">
         <app-button
           class="mr-2"
+          warning
           @click="forceLeave()"
         >
-          Пофиг!
+          Подтверждаю
         </app-button>
 
         <app-button
           @click="confirmCancel = false"
         >
-          Нет-нет, не отменять
+          Отмена
         </app-button>
       </div>
     </app-dialog>
@@ -331,5 +333,5 @@ export default {
 .note-editor
   width: 100%
   max-width: 450px
-  border: 1px solid black
+  // border: 1px solid black
 </style>

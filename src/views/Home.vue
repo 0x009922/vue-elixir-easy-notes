@@ -1,5 +1,5 @@
 <template>
-  <div class="home-view">
+  <div class="home-view card">
     <div class="pa-4 d-flex align-center">
       <div class="flex-grow-1 title">
         Заметки
@@ -33,20 +33,18 @@
         >
           <template #actions>
             <router-link :to="{ name: 'edit-note', params: { id: note.id } }">
-              <app-button>
-                <app-icon>
-                  {{ mdiPencil }}
-                </app-icon>
+              <app-button icon>
+                {{ mdiPencil }}
               </app-button>
             </router-link>
 
             <app-button
               class="ml-2"
+              icon
+              warning
               @click="removeId = note.id"
             >
-              <app-icon>
-                {{ mdiDelete }}
-              </app-icon>
+              {{ mdiDelete }}
             </app-button>
           </template>
         </app-note-preview>
@@ -127,7 +125,7 @@ export default {
 
 <style lang="sass" scoped>
 .home-view
-  border: 1px solid gray
+  // border: 1px solid gray
   // padding: 16px
   width: 100%
   max-width: 450px

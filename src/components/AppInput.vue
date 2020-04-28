@@ -66,9 +66,11 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@use '@/assets/colors'
+
 .app-input
   &:not(.app-input--readonly)
-    border-bottom: 1px solid gray
+    border-bottom: 1px solid colors.$primary
   position: relative
   input
     padding: 8px
@@ -88,7 +90,7 @@ export default {
     bottom: -1px
     left: 0
     right: 0
-    background: black
+    background: colors.$primary
 
   &__active-bottom-transition
     &-enter-active, &-leave-active

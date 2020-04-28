@@ -9,7 +9,7 @@
     <div class="app-dialog__card-container">
       <div
         v-if="value"
-        class="app-dialog__card"
+        class="app-dialog__card card"
       >
         <slot />
       </div>
@@ -59,5 +59,4 @@ export default {
   &__card
     width: 100%
     max-width: 400px
-    background: white
 </style>

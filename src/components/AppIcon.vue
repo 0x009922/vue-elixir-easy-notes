@@ -36,6 +36,8 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@use '@/assets/colors'
+
 @mixin icon-theme($color)
   path
     fill: $color
@@ -43,5 +45,9 @@ export default {
 
 svg.app-icon
   &--primary
-    @include icon-theme(black)
+    @include icon-theme(colors.$primary)
+  &--warning
+    @include icon-theme(colors.$warning)
+  &--disabled
+    @include icon-theme(colors.$disabled)
 </style>

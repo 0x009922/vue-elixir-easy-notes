@@ -1,9 +1,14 @@
 <template>
   <div
     id="app"
-    class="d-flex align-center justify-center fill"
+    class="d-flex align-center justify-center"
   >
-    <router-view v-if="!isFetching" />
+    <app-loading
+      :value="isFetching"
+      size="40"
+    >
+      <router-view />
+    </app-loading>
   </div>
 </template>
 
@@ -25,6 +30,9 @@ export default {
 </script>
 
 <style lang="sass">
+@use './assets/colors'
+
 #app
   height: 100vh
+  background: colors.$background
 </style>
