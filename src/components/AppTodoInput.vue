@@ -1,5 +1,5 @@
 <template>
-  <div class="app-todo-input d-flex align-center">
+  <div class="d-flex align-center">
     <app-checkbox
       v-model="doneModel"
       :readonly="readonly"
@@ -44,7 +44,3 @@ export default {
   },
 };
 </script>
-
-<style lang="sass" scoped>
-.app-todo-input
-</style>
