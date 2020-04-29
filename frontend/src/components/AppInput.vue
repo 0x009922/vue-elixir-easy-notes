@@ -47,7 +47,8 @@ export default {
   props: {
     value: {
       type: [String, Number],
-      required: true,
+      default: null,
+      // required: true,
     },
     readonly: {
       type: Boolean,
@@ -60,7 +61,7 @@ export default {
   methods: {
     debouncedUpdate: debounce(function (val) {
       this.$emit('input', val);
-    }, 500),
+    }, 300),
   },
 };
 </script>

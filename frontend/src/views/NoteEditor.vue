@@ -201,7 +201,6 @@ import {
 } from '@mdi/js';
 import AppTodoInput from '@/components/AppTodoInput.vue';
 import AppDialog from '@/components/AppDialog.vue';
-import db from '../db-emulator';
 
 export default {
   name: 'NoteEditor',
@@ -263,25 +262,28 @@ export default {
       handler(val) {
         if (val) {
           this.note = JSON.parse(val);
-          this.noteSnapshots = [];
-          this.pushSnapshot();
+
+          // Если есть сохранённые снимки состояния, то заменяю последний из них
+          if (this.noteSnapshots.length) {
+            this.noteSnapshots.splice(-1, 1, this.noteJSON);
+          }
         }
       },
     },
   },
   methods: {
     addTodo() {
-      const currentMaxId = this.note.todos.length
-        ? Math.max(...this.note.todos.map((todo) => todo.id))
-        : 0;
-      const id = currentMaxId + 1;
+      // Создаю новый todo со специальным id = "new-{timestamp}"
+      // Не uuid, конечно, но сойдёт
+      const newId = `new-${new Date().getTime()}`;
       this.note.todos.push({
-        id,
+        id: newId,
         title: '',
         done: false,
       });
     },
     removeTodo(id) {
+      // Удаление фильтрацией
       this.note.todos = this.note.todos.filter((val) => val.id !== id);
     },
     undo() {
@@ -312,8 +314,23 @@ export default {
       try {
         this.isSaving = true;
 
-        await db.update(this.noteId, this.note);
-        await this.$store.dispatch('fetch');
+        // Собираю новые данные
+        // Все todo с id в формате 'new-{time}' - новые, из них удаляю поле id
+        const reg = /^new-\d+$/.compile();
+        const data = {
+          title: this.note.title,
+          todos: this.note.todos.map(
+            ({ id, title, done }) => {
+              if (typeof id === 'string' && reg.test(id)) {
+                return { title, done };
+              }
+              return { id, title, done };
+            },
+          ),
+        };
+
+        // Обновляю данные
+        await this.$store.dispatch('update', { id: this.noteId, data });
       } finally {
         this.isSaving = false;
       }
@@ -322,8 +339,7 @@ export default {
       try {
         this.isRemoving = true;
 
-        await db.remove(this.noteId);
-        await this.$store.dispatch('fetch');
+        await this.$store.dispatch('remove', { id: this.noteId });
 
         this.leaveAnyway = true;
         this.$router.replace({ name: 'home' });
@@ -359,5 +375,4 @@ export default {
     &-enter, &-leave-to
       transform: scale(0.9)
       opacity: 0
-  // border: 1px solid black
 </style>

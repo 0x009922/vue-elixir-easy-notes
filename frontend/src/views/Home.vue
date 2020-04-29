@@ -97,7 +97,6 @@ import { mapState } from 'vuex';
 import { mdiDelete, mdiPencil, mdiClose } from '@mdi/js';
 import AppNotePreview from '@/components/AppNotePreview.vue';
 import AppDialog from '@/components/AppDialog.vue';
-import db from '../db-emulator';
 
 export default {
   name: 'Home',
@@ -124,8 +123,7 @@ export default {
     async create() {
       try {
         this.isCreating = true;
-        const { id } = await db.create();
-        await this.$store.dispatch('fetch');
+        const id = await this.$store.dispatch('create');
         this.$router.push({ name: 'edit-note', params: { id } });
       } finally {
         this.isCreating = false;
@@ -134,8 +132,7 @@ export default {
     async remove() {
       try {
         this.isRemoving = true;
-        await db.remove(this.removeId);
-        await this.$store.dispatch('fetch');
+        await this.$store.dispatch('remove', { id: this.removeId });
         this.removeId = null;
       } finally {
         this.isRemoving = false;
@@ -147,8 +144,6 @@ export default {
 
 <style lang="sass" scoped>
 .home-view
-  // border: 1px solid gray
-  // padding: 16px
   width: 100%
   max-width: 450px
 </style>

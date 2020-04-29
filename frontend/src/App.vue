@@ -64,29 +64,31 @@ export default {
     opacity: 0
     transform: translateX(100px)
 
+$dur: .4s
+
 .home-editor-transition
   &-enter-active
-    transition: all .3s easings.$out-quart
+    transition: all $dur .3s easings.$out-quart
   &-leave-active
-    transition: all .3s easings.$out-quart
+    transition: all $dur easings.$in-quart
     position: absolute
   &-enter
     opacity: 0
-    transform: translateZ(-100px)
+    transform: translateX(100px)
   &-leave-to
-    transform: translateZ(100px)
+    transform: translateX(-100px)
     opacity: 0
 
 .editor-home-transition
   &-enter-active
-    transition: all .3s easings.$out-quart
+    transition: all $dur .3s easings.$out-quart
   &-leave-active
-    transition: all .3s easings.$out-quart
+    transition: all $dur easings.$in-quart
     position: absolute
   &-leave-to
     opacity: 0
-    transform: translateZ(-100px)
+    transform: translateX(100px)
   &-enter
-    transform: translateZ(100px)
+    transform: translateX(-100px)
     opacity: 0
 </style>
