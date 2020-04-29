@@ -1,0 +1,6 @@
+version: '0.2'
+services:
+  frontend:
+    build: .
+    ports:
+      - "5000:80"
