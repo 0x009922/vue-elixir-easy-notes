@@ -32,4 +32,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 - [x] Цвета и оформление
 - [x] Анимации кликов
 - [x] Анимации переходов и модалки
+- [ ] Docker
 - [ ] Комментарии

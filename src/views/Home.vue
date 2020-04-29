@@ -15,39 +15,46 @@
 
     <hr>
 
-    <div class="home-view__list px-4 pt-4">
+    <div class="home-view__list">
       <div
         v-if="!notes.length"
-        class="mb-4 text--secondary"
+        class="text--secondary pa-4"
       >
         Список заметок пуст.
       </div>
 
       <template v-else>
-        <app-note-preview
-          v-for="note in notes"
-          :key="note.id"
-          :title="note.title"
-          :todos="note.todos"
-          class="mb-4"
-        >
-          <template #actions>
-            <router-link :to="{ name: 'edit-note', params: { id: note.id } }">
-              <app-button icon>
-                {{ mdiPencil }}
-              </app-button>
-            </router-link>
+        <template v-for="(note, i) in notes">
+          <app-note-preview
+            :key="note.id"
+            :title="note.title"
+            :todos="note.todos"
+            class="px-4 my-2"
+          >
+            <template #actions>
+              <router-link :to="{ name: 'edit-note', params: { id: note.id } }">
+                <app-button icon>
+                  {{ mdiPencil }}
+                </app-button>
+              </router-link>
 
-            <app-button
-              class="ml-2"
-              icon
-              warning
-              @click="removeId = note.id"
-            >
-              {{ mdiDelete }}
-            </app-button>
-          </template>
-        </app-note-preview>
+              <app-button
+                class="ml-2"
+                icon
+                warning
+                @click="removeId = note.id"
+              >
+                {{ mdiDelete }}
+              </app-button>
+            </template>
+          </app-note-preview>
+
+          <hr
+            v-if="i < notes.length - 1"
+            :key="`sep${i}`"
+            class="ml-4 my-2"
+          >
+        </template>
       </template>
     </div>
 
@@ -55,8 +62,17 @@
       :value="!!removeId"
       @input="removeId = null"
     >
-      <div class="pa-4 title">
-        Подтверждение
+      <div class="pa-4 title d-flex">
+        <div class="flex-grow-1">
+          Подтверждение
+        </div>
+        <app-button
+          class="ma-n2"
+          icon
+          @click="removeId = null"
+        >
+          {{ mdiClose }}
+        </app-button>
       </div>
 
       <div class="px-4 text--secondary">
@@ -78,7 +94,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { mdiDelete, mdiPencil } from '@mdi/js';
+import { mdiDelete, mdiPencil, mdiClose } from '@mdi/js';
 import AppNotePreview from '@/components/AppNotePreview.vue';
 import AppDialog from '@/components/AppDialog.vue';
 import db from '../db-emulator';
@@ -97,6 +113,7 @@ export default {
 
     mdiDelete,
     mdiPencil,
+    mdiClose,
   }),
   computed: {
     ...mapState([

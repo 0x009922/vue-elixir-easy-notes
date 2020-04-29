@@ -33,5 +33,5 @@ export default {
   animation-name: appLoadingRotation
   animation-duration: .5s
   animation-iteration-count: infinite
-  animation-timing-function: ease
+  animation-timing-function: linear
 </style>

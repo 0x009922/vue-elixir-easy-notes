@@ -6,7 +6,7 @@
     }"
     @click="$emit('input', !value)"
   >
-    <app-icon v-if="value">
+    <app-icon v-if="value" :color="readonly ? 'disabled' : 'primary'">
       {{ mdiCheck }}
     </app-icon>
   </div>
@@ -37,8 +37,17 @@ export default {
 @use '@/assets/sass/colors'
 @use '@/assets/sass/mixins'
 
+@mixin colorize($color)
+  border-color: $color
+  &:hover
+    background: transparentize(colors.$primary, 0.9)
+
 .app-checkbox
-  border: 1px solid colors.$primary
+  @include mixins.pressable
+  @include colorize(colors.$primary)
+
+  border-width: 1px
+  border-style: solid
   border-radius: 2px
   width: 20px
   height: 20px
@@ -48,11 +57,8 @@ export default {
   cursor: pointer
   user-select: none
 
-  @include mixins.pressable
-
-  &:hover
-    background: transparentize(colors.$primary, 0.9)
-
   &--readonly
     pointer-events: none
+    @include colorize(colors.$disabled)
+    // border-radius: 50X
 </style>

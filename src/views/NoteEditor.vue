@@ -1,9 +1,9 @@
 <template>
   <div class="note-editor card">
-    <div class="pa-4 d-flex align-center">
+    <div class="pa-3 d-flex align-center">
       <router-link
         :to="{ name: 'home' }"
-        class="ml-n2"
+        class="ml-n1"
       >
         <app-button icon>
           {{ mdiArrowLeft }}
@@ -49,10 +49,11 @@
       Список TODO
     </div>
 
-    <div class="px-4 pb-4">
+    <div class="px-4">
       <div
-        v-for="todo in note.todos"
+        v-for="(todo, i) in note.todos"
         :key="todo.id"
+        :class="{ 'mb-4': i === note.todos.length - 1 }"
         class="d-flex"
       >
         <app-todo-input

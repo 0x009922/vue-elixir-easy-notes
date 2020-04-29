@@ -66,7 +66,7 @@ export default {
 
 .home-editor-transition
   &-enter-active
-    transition: all .3s easings.$out-back
+    transition: all .3s easings.$out-quart
   &-leave-active
     transition: all .3s easings.$out-quart
     position: absolute
@@ -79,7 +79,7 @@ export default {
 
 .editor-home-transition
   &-enter-active
-    transition: all .3s easings.$out-back
+    transition: all .3s easings.$out-quart
   &-leave-active
     transition: all .3s easings.$out-quart
     position: absolute

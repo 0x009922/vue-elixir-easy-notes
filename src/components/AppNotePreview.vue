@@ -1,6 +1,6 @@
 <template>
   <div class="app-note-preview">
-    <div class="app-note-preview__title d-flex align-center mb-2">
+    <div class="app-note-preview__title d-flex align-center">
       <div class="flex-grow-1">
         <template v-if="title">
           {{ title }}
@@ -27,7 +27,7 @@
 
       <div
         v-if="todos.length > todosLimit"
-        class="app-note-preview__more"
+        class="app-note-preview__more text--secondary mt-2"
       >
         Ещё пунктов: {{ todos.length - todosLimit }}
       </div>
@@ -77,9 +77,6 @@ export default {
   &__title
     font-size: 16px
   // padding: 8px 16px
-  &__todo + *
-    margin-top: 8px
   &__more
-    color: gray
     font-size: 0.9em
 </style>
