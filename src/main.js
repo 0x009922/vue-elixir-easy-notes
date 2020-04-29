@@ -7,7 +7,7 @@ import AppInput from './components/AppInput.vue';
 import AppCheckbox from './components/AppCheckbox.vue';
 import AppLoading from './components/AppLoading.vue';
 import AppIcon from './components/AppIcon.vue';
-import './assets/styles.sass';
+import './assets/sass/styles.sass';
 
 Vue.component('AppButton', AppButton);
 Vue.component('AppInput', AppInput);

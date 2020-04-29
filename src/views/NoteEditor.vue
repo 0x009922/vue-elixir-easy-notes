@@ -49,11 +49,11 @@
       Список TODO
     </div>
 
-    <div class="px-4">
+    <div class="px-4 pb-4">
       <div
-        v-for="(todo, i) in note.todos"
-        :key="i"
-        class="d-flex mb-4"
+        v-for="todo in note.todos"
+        :key="todo.id"
+        class="d-flex"
       >
         <app-todo-input
           :value="todo"
@@ -65,7 +65,7 @@
         <app-button
           icon
           warning
-          @click="note.todos.splice(i, 1), pushSnapshot()"
+          @click="removeTodo(todo.id), pushSnapshot()"
         >
           {{ mdiDelete }}
         </app-button>
@@ -74,7 +74,7 @@
 
     <app-button
       class="mx-4 mb-4"
-      @click="note.todos.push({ title: '', done: false }), pushSnapshot()"
+      @click="addTodo(), pushSnapshot()"
     >
       Добавить пункт TODO
     </app-button>
@@ -269,6 +269,20 @@ export default {
     },
   },
   methods: {
+    addTodo() {
+      const currentMaxId = this.note.todos.length
+        ? Math.max(...this.note.todos.map((todo) => todo.id))
+        : 0;
+      const id = currentMaxId + 1;
+      this.note.todos.push({
+        id,
+        title: '',
+        done: false,
+      });
+    },
+    removeTodo(id) {
+      this.note.todos = this.note.todos.filter((val) => val.id !== id);
+    },
     undo() {
       if (this.isUndoAvailable) {
         this.currentSnapshotIndex -= 1;
@@ -333,5 +347,16 @@ export default {
 .note-editor
   width: 100%
   max-width: 450px
+  &__todos-transition
+    &-enter-active, &-leave-active
+      transition: all .3s ease
+    &-leave-active
+      position: absolute
+      width: 100%
+    &-move
+      transition: all .5s ease
+    &-enter, &-leave-to
+      transform: scale(0.9)
+      opacity: 0
   // border: 1px solid black
 </style>

@@ -34,7 +34,8 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@use '@/assets/colors'
+@use '@/assets/sass/colors'
+@use '@/assets/sass/mixins'
 
 .app-checkbox
   border: 1px solid colors.$primary
@@ -46,6 +47,8 @@ export default {
   justify-content: center
   cursor: pointer
   user-select: none
+
+  @include mixins.pressable
 
   &:hover
     background: transparentize(colors.$primary, 0.9)

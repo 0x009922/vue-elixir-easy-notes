@@ -66,7 +66,8 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@use '@/assets/colors'
+@use '@/assets/sass/colors'
+@use '@/assets/sass/easings'
 
 .app-input
   &:not(.app-input--readonly)
@@ -86,15 +87,17 @@ export default {
 
   &__active-bottom
     position: absolute
-    height: 2px
+    height: 3px
     bottom: -1px
     left: 0
     right: 0
     background: colors.$primary
 
   &__active-bottom-transition
-    &-enter-active, &-leave-active
-      transition: all .25s ease
+    &-enter-active
+      transition: all .25s easings.$out-expo
+    &-leave-active
+      transition: all .15s easings.$in-expo
     &-enter, &-leave-to
       opacity: 0
       left: 50%

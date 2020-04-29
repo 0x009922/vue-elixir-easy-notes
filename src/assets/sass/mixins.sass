@@ -1,0 +1,6 @@
+@use 'easings'
+  
+@mixin pressable
+  transition: transform .15s easings.$out-back
+  &:active
+    transform: scale(0.9)

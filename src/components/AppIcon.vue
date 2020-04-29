@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@use '@/assets/colors'
+@use '@/assets/sass/colors'
 
 @mixin icon-theme($color)
   path

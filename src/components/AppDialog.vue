@@ -1,18 +1,22 @@
 <template>
   <div class="app-dialog__scrim">
-    <div
-      v-if="value"
-      class="app-dialog__overlay"
-      @click="$emit('input', false)"
-    />
-
-    <div class="app-dialog__card-container">
+    <transition name="app-dialog__overlay-transition">
       <div
         v-if="value"
-        class="app-dialog__card card"
-      >
-        <slot />
-      </div>
+        class="app-dialog__overlay"
+        @click="$emit('input', false)"
+      />
+    </transition>
+
+    <div class="app-dialog__card-container">
+      <transition name="app-dialog__card-transition">
+        <div
+          v-if="value"
+          class="app-dialog__card card"
+        >
+          <slot />
+        </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -30,6 +34,8 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@use '@/assets/sass/easings'
+
 .app-dialog
   &__scrim
     position: fixed
@@ -59,4 +65,24 @@ export default {
   &__card
     width: 100%
     max-width: 400px
+
+  &__overlay-transition
+    &-enter-active
+      transition: all .4s easings.$in-out-quart
+    &-leave-active
+      transition: all .25s easings.$in-out-quart
+    &-enter, &-leave-to
+      opacity: 0
+
+  &__card-transition
+    &-enter-active
+      transition: all .4s .1s easings.$out-back
+    &-leave-active
+      transition: all .15s easings.$in-quart
+    &-enter, &-leave-to
+      opacity: 0
+      transform: scale(0.9)
+    // &-leave-to
+    //   opacity: 0
+    //   transform: scale(0.9)
 </style>

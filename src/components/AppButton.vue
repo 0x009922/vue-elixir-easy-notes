@@ -65,7 +65,9 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@use '@/assets/colors'
+@use '@/assets/sass/colors'
+@use '@/assets/sass/mixins'
+@use '@/assets/sass/easings'
 
 $shadow: 3px
 
@@ -78,6 +80,8 @@ $shadow: 3px
   color: $color
   &:not(.app-button--icon)
     box-shadow: 0 $shadow 0 lighten($color, 20)
+    &:active
+      box-shadow: 0 0 0 lighten($color, 20)
   &:after
     border: 1px solid $color
   &.app-button--icon:hover
@@ -101,10 +105,11 @@ $shadow: 3px
   user-select: none
 
   &:not(.app-button--icon)
-    // $shadow: 3px
+    // $transition: all .05s easings.$out-quad
+    // transition: $transition
 
     &:active
-      box-shadow: none
+      // box-shadow: 0 0 0
       transform: translateY($shadow)
       &:after
         bottom: 0
@@ -116,9 +121,11 @@ $shadow: 3px
       left: 0
       right: 0
       bottom: -$shadow
+      // transition: $transition
 
   &--icon
     @include round-corners(50%)
+    @include mixins.pressable
 
   &--disabled
     pointer-events: none

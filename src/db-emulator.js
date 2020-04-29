@@ -18,9 +18,9 @@ function readStorage() {
       id: 1,
       title: 'Первая тестовая заметка',
       todos: [
-        { title: 'Первый пункт TODO', done: false },
-        { title: 'Второй пункт', done: true },
-        { title: 'Третий, скрытый пункт', done: false },
+        { id: 1, title: 'Первый пункт TODO', done: false },
+        { id: 2, title: 'Второй пункт', done: true },
+        { id: 3, title: 'Третий, скрытый пункт', done: false },
       ],
     }];
   }
