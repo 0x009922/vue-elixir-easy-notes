@@ -1,11 +1,9 @@
-# easy-notebook
+# vue-elixir-easy-notes
 
 ### Запуск (пока не работает)
-```sh
-docker-compose up
-```
 
-Открыть в браузере http://localhost:5000
+  1. `docker-compose up`
+  2. Открыть в браузере http://localhost:5000
 
 ### Что делаю
 
@@ -17,7 +15,7 @@ docker-compose up
 - [x] Анимации кликов
 - [x] Анимации переходов и модалки
 - [x] Docker
-- [ ] Создание настоящей базы данных, бэка, API etc
+- [x] Создание настоящей базы данных, бэка, API etc
 - [ ] Пофиксить debounce в AppInput и undo-redo
 - [ ] Сделать портальность модалок
 - [ ] Сменить фон

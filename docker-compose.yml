@@ -1,6 +1,48 @@
-version: '0.2'
+version: '3.0'
 services:
+  # Отвечает на запросы API
+  backend:
+    build: ./backend
+    environment:
+      - PORT=4000
+      - PGUSER=postgres
+      - PGPASSWORD=postgres
+      - PGDATABASE=phoenix
+      - PGPORT=5432
+      - PGHOST=db
+    expose:
+      - "4000"
+    depends_on:
+      - db
+
+  # База данных PostgreSQL, с которой общается backend
+  db:
+    image: postgres:alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=phoenix
+    expose:
+      - "5432"
+
+  # Сборка Vue-SPA
   frontend:
-    build: .
+    build: ./frontend
+    volumes:
+      - www:/app/dist
+
+  # Корневой сервер NGINX, который шарит файлы фронта и перенаправляет запросы API
+  nginx:
+    image: nginx:stable-alpine
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - www:/usr/share/nginx/html
     ports:
       - "5000:80"
+    depends_on:
+      - db
+      - backend
+      - frontend
+
+volumes:
+  www: 
