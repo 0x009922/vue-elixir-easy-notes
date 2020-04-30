@@ -35,7 +35,7 @@
     <hr>
 
     <div class="subheader">
-      Текст заметки
+      Название заметки
     </div>
 
     <app-input
