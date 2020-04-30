@@ -1,9 +1,6 @@
 <template>
   <div
     class="app-input"
-    :class="{
-      'app-input--readonly': readonly,
-    }"
   >
     <input
       v-if="!readonly"
@@ -49,10 +46,6 @@ export default {
       type: [String, Number],
       default: null,
     },
-    readonly: {
-      type: Boolean,
-      default: false,
-    },
   },
   data: () => ({
     isFocused: false,
@@ -96,8 +89,7 @@ export default {
 @use '@/assets/sass/easings'
 
 .app-input
-  &:not(.app-input--readonly)
-    border-bottom: 1px solid colors.$primary
+  border-bottom: 1px solid colors.$disabled
   position: relative
   input
     padding: 8px
@@ -113,7 +105,7 @@ export default {
 
   &__active-bottom
     position: absolute
-    height: 3px
+    height: 2px
     bottom: -1px
     left: 0
     right: 0
