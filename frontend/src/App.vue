@@ -3,7 +3,10 @@
     id="app"
     class="d-flex align-center justify-center"
   >
-    <transition name="app__content-transition" mode="out-in">
+    <transition
+      name="app__content-transition"
+      mode="out-in"
+    >
       <app-loading
         :value="isFetching"
         size="40"
