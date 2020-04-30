@@ -195,6 +195,9 @@ import { mapGetters } from 'vuex';
 import AppTodoInput from '@/components/AppTodoInput.vue';
 import AppDialog from '@/components/AppDialog.vue';
 
+/**
+ * Компонент для редактирования заметки
+ */
 export default {
   name: 'NoteEditor',
   components: {
@@ -202,26 +205,68 @@ export default {
     AppDialog,
   },
   data: () => ({
+    /**
+     * Объект с данными заметки.
+     * Является копией того, что находится в хранилище.
+     */
     note: null,
+
+    /**
+     * Снимки note в виде массива JSON
+     * @type {string[]}
+     */
     noteSnapshots: [],
+
+    /**
+     * Индекс текущего снимка. Нужно для 'путешествия'
+     * под снимкам при undo-redo
+     */
     currentSnapshotIndex: -1,
 
+    /**
+     * Открыть ли модалку для подтверждения удаления
+     */
     confirmRemove: false,
+
+    /**
+     * Открыть ли модалку для подтверждения отмены изменений
+     */
     confirmCancel: false,
 
+    /**
+     * Если этот флаг true, то покидание страницы не будет предотвращено
+     */
     leaveAnyway: false,
+
+    /**
+     * Маршрут, переход к которому был отменён в beforeRouteLeave
+     */
     nextPreventedRoute: null,
 
+    /**
+     * Сохраняются ли новые данные
+     */
     isSaving: false,
+
+    /**
+     * Удаляется ли заметка
+     */
     isRemoving: false,
   }),
   computed: {
     ...mapGetters([
       'notesById',
     ]),
+    /**
+     * id заметки, из маршрута
+     */
     noteId() {
       return +this.$route.params.id;
     },
+    /**
+     * JSON заметки, которая находится в хранилище,
+     * т.е. снимок того, что сохранено на сервере
+     */
     storedNoteJSON() {
       const note = this.notesById[this.noteId];
       if (note) {
@@ -230,20 +275,37 @@ export default {
       }
       return null;
     },
+    /**
+     * Снимок JSON текущих данных
+     */
     noteJSON() {
       return JSON.stringify(this.note);
     },
+    /**
+     * Сохранена ли заметка
+     */
     isSaved() {
       return this.storedNoteJSON === this.noteJSON;
     },
+    /**
+     * Доступна ли отмена одного действия
+     */
     isUndoAvailable() {
       return this.currentSnapshotIndex > 0;
     },
+    /**
+     * Доступен ли повтор отменённого действия
+     */
     isRedoAvailable() {
       return this.currentSnapshotIndex < this.noteSnapshots.length - 1;
     },
   },
   watch: {
+    /**
+     * При изменении снимка того, что находится в хранилище,
+     * обновляю данные для редактирования и немного
+     * поправляю снимки для undo-redo
+     */
     storedNoteJSON: {
       immediate: true,
       handler(val) {
@@ -262,6 +324,13 @@ export default {
     },
   },
   methods: {
+    /**
+     * Добавление нового todo. Поскольку оно не создаётся сразу на сервере,
+     * заранее знать, какой у него id невозможно. Поэтому в качестве id
+     * будет специальное уникальное строковое значение.
+     * При сохранении данных эти id вырежутся, они нужны только для корректной установки
+     * ключей в v-for
+     */
     addTodo() {
       // Создаю новый todo со специальным id = "new-{timestamp}"
       // Не uuid, конечно, но сойдёт
@@ -272,34 +341,62 @@ export default {
         done: false,
       });
     },
+    /**
+     * Удаление todo
+     */
     removeTodo(id) {
       // Удаление фильтрацией
       this.note.todos = this.note.todos.filter((val) => val.id !== id);
     },
+    /**
+     * Отмена последнего действия
+     */
     undo() {
       if (this.isUndoAvailable) {
         this.currentSnapshotIndex -= 1;
         this.restoreSnapshot();
       }
     },
+    /**
+     * Повтор отменённого действия
+     */
     redo() {
       if (this.isRedoAvailable) {
         this.currentSnapshotIndex += 1;
         this.restoreSnapshot();
       }
     },
+    /**
+     * Восстановление данных note из снимка, на который указывает индекс снимка
+     */
     restoreSnapshot() {
       this.note = JSON.parse(this.noteSnapshots[this.currentSnapshotIndex]);
     },
+    /**
+     * Добавление нового снимка.
+     * Отрезает 'хвост' отменённых действий, если такой есть.
+     */
     pushSnapshot() {
       this.noteSnapshots = this.noteSnapshots.slice(0, this.currentSnapshotIndex + 1);
       this.noteSnapshots.push(this.noteJSON);
       this.currentSnapshotIndex = this.noteSnapshots.length - 1;
     },
+    /**
+     * Покинуть страницу, ничего не сохраняя.
+     * Используется из модалки про несохранённые изменения
+     */
     forceLeave() {
       this.leaveAnyway = true;
       this.$router.push(this.nextPreventedRoute || { name: 'home' });
     },
+    /**
+     * Сохранение данных.
+     *
+     * Бэк обновляет сразу и данные заметки, и связанные с ней todo.
+     * Обновляет существующие todo, если есть данные с их id в note.todos.
+     * Удаляет существующие, если их id нет в note.todos.
+     * Создаёт новые, если в note.todos есть элементы без id.
+     */
     async save() {
       try {
         this.isSaving = true;
@@ -325,6 +422,9 @@ export default {
         this.isSaving = false;
       }
     },
+    /**
+     * Удаление заметки и возврат к списку заметок
+     */
     async remove() {
       try {
         this.isRemoving = true;
@@ -338,6 +438,10 @@ export default {
       }
     },
   },
+  /**
+   * Предотвращение ухода с маршрута, если
+   * остались несохранённые изменения
+   */
   beforeRouteLeave(to, from, next) {
     if (this.isSaved || this.leaveAnyway) {
       next();

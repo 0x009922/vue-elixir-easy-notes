@@ -1,6 +1,11 @@
 <script>
 import { mergeData } from 'vue-functional-data-merge';
 
+/**
+ * Компонент лоадера.
+ * Если указано значение true, рендерит вращающуюся иконку.
+ * Если указано false, рендерит переданный слот (только одного потомка)
+ */
 export default {
   name: 'AppLoading',
   functional: true,

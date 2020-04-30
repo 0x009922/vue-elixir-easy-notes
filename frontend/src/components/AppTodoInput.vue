@@ -2,7 +2,6 @@
   <div class="d-flex align-center">
     <app-checkbox
       v-model="doneModel"
-      :readonly="readonly"
       class="mr-4"
     />
 
@@ -10,22 +9,24 @@
       v-model="titleModel"
       class="flex-grow-1"
       placeholder="Что нужно сделать?"
-      :readonly="readonly"
     />
   </div>
 </template>
 
 <script>
+/**
+ * Комплексный инпут для редактирования todo - текста и done/не done
+ */
 export default {
   name: 'AppTodoInput',
   props: {
+    /**
+     * Объект с данными todo
+     * @type {{ title: string, done: boolean }}
+     */
     value: {
       type: Object,
       required: true,
-    },
-    readonly: {
-      type: Boolean,
-      default: false,
     },
   },
   computed: {

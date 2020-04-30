@@ -35,14 +35,6 @@
         </div>
       </template>
 
-      <!-- <app-todo-input
-        v-for="todo in shownTodos"
-        :key="todo.id"
-        :value="todo"
-        readonly
-        class="app-note-preview__todo"
-      /> -->
-
       <div
         v-if="todos.length > todosLimit"
         class="app-note-preview__more text--secondary mt-2 pb-2"
@@ -54,31 +46,36 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
+/**
+ * Превью заметки. Текст, несколько пунктов todo
+ * и опциональный слот для действий с заметкой.
+ */
 export default {
   name: 'AppNotePreview',
   props: {
+    /**
+     * Название заметки
+     */
     title: {
       type: String,
       default: '',
     },
+    /**
+     * Список todo заметки
+     */
     todos: {
       type: Array,
       default: () => [],
     },
+    /**
+     * Максимальное количество todo, которое будет показано
+     */
     todosLimit: {
       type: Number,
       default: 2,
     },
   },
   computed: {
-    ...mapGetters([
-      'notesById',
-    ]),
-    note() {
-      return this.notesById[this.nodeId];
-    },
     shownTodos() {
       return this.todos.slice(0, this.todosLimit);
     },
@@ -90,7 +87,6 @@ export default {
 .app-note-preview
   &__title
     font-size: 16px
-  // padding: 8px 16px
   &__more
     font-size: 0.9em
 

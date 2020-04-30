@@ -9,6 +9,7 @@ import AppLoading from './components/AppLoading.vue';
 import AppMdiIcon from './components/AppMdiIcon.vue';
 import './assets/sass/styles.sass';
 
+// Делаю глобальные более-менее часто используемые компоненты
 Vue.component('AppButton', AppButton);
 Vue.component('AppInput', AppInput);
 Vue.component('AppCheckbox', AppCheckbox);

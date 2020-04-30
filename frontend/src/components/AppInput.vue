@@ -3,27 +3,12 @@
     class="app-input"
   >
     <input
-      v-if="!readonly"
       :value="lazyValue"
       v-bind="$attrs"
       @input="lazyUpdate($event.target.value)"
       @focus="isFocused = true"
       @blur="onBlur(), isFocused = false"
     >
-    <div
-      v-else
-      class="app-input__readonly"
-    >
-      <template v-if="value">
-        {{ value }}
-      </template>
-      <span
-        v-else
-        class="text--secondary"
-      >
-        Пусто
-      </span>
-    </div>
 
     <transition
       name="app-input__active-bottom-transition"
@@ -39,6 +24,11 @@
 <script>
 const UPDATE_DELAY = 400;
 
+/**
+ * Стилизованный инпут.
+ * Автоматически 'откладывает' ввод пользователя, лениво
+ * сообщает об изменениях.
+ */
 export default {
   name: 'AppInput',
   props: {
@@ -48,12 +38,17 @@ export default {
     },
   },
   data: () => ({
+    // Находится ли в фокусе
     isFocused: false,
 
+    // 'Ленивое' значение инпута. Сначала выставляется оно, потому делается emit('input')
     lazyValue: null,
+
+    // Установленный таймер для отдачи данных выше
     updateTimer: null,
   }),
   watch: {
+    // При изменении 'источника истины' сразу устанавливать локальное ленивое значение
     value: {
       immediate: true,
       handler(val) {
@@ -62,6 +57,9 @@ export default {
     },
   },
   methods: {
+    /**
+     * Ленивое обновление данных
+     */
     lazyUpdate(val) {
       this.lazyValue = val;
       if (this.updateTimer) {
@@ -69,13 +67,19 @@ export default {
       }
       this.updateTimer = setTimeout(this.update, UPDATE_DELAY);
     },
+    /**
+     * Обработка потери фокуса. В этом случае нужно немедленно отдавать
+     * данные наверх, если это было запланировано
+     */
     onBlur() {
       if (this.updateTimer) {
         clearTimeout(this.updateTimer);
-        this.updateTimer = null;
         this.update();
       }
     },
+    /**
+     * Отдача данных выше и очистка таймера
+     */
     update() {
       this.$emit('input', this.lazyValue);
       this.updateTimer = null;
@@ -97,11 +101,6 @@ export default {
     border: none
     &:focus
       outline: none
-
-  &__readonly
-    padding: 8px
-    padding-left: 0
-    font-size: 14px
 
   &__active-bottom
     position: absolute

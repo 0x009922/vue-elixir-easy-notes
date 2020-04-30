@@ -1,14 +1,24 @@
 <script>
 import { mergeData } from 'vue-functional-data-merge';
 
+/**
+ * Специальный компонент для отображения иконок mdi.
+ * название иконки берёт из текста переданного слота.
+ */
 export default {
   name: 'AppMdiIcon',
   functional: true,
   props: {
+    /**
+     * Размер иконки, в px
+     */
     size: {
       type: [Number, String],
       default: 20,
     },
+    /**
+     * Цвет иконки. Доступные значения в теге <style> ниже
+     */
     color: {
       type: String,
       default: 'primary',
@@ -41,9 +51,6 @@ export default {
 
 @mixin icon-theme($color)
   color: $color
-  // path
-  //   fill: $color
-  //   stroke: $color
 
 .app-mdi-icon
   &--primary
@@ -54,6 +61,4 @@ export default {
     @include icon-theme(colors.$disabled)
   &--white
     @include icon-theme(white)
-  &--success
-    @include icon-theme(colors.$success)
 </style>

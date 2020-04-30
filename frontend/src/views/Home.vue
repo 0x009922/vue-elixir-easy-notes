@@ -97,6 +97,9 @@ import { mapState } from 'vuex';
 import AppNotePreview from '@/components/AppNotePreview.vue';
 import AppDialog from '@/components/AppDialog.vue';
 
+/**
+ * Компонент просмотра всех заметок и управления ими.
+ */
 export default {
   name: 'Home',
   components: {
@@ -104,9 +107,13 @@ export default {
     AppDialog,
   },
   data: () => ({
+    // Создаётся ли заметка
     isCreating: false,
 
+    // id заметки, которую нужно удалить. Устанавливается для подтверждения пользователем
     removeId: null,
+
+    // Происходит ли удаление заметки с removeId
     isRemoving: false,
   }),
   computed: {
@@ -115,6 +122,9 @@ export default {
     ]),
   },
   methods: {
+    /**
+     * Создание новой заметки и переход к её редактированию
+     */
     async create() {
       try {
         this.isCreating = true;
@@ -124,6 +134,9 @@ export default {
         this.isCreating = false;
       }
     },
+    /**
+     * Удаление ранее выбранной заметки
+     */
     async remove() {
       try {
         this.isRemoving = true;

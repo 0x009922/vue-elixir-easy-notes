@@ -24,27 +24,46 @@
 </template>
 
 <script>
+/**
+ * Стандартная кнопка приложения.
+ */
 export default {
   name: 'AppButton',
   props: {
+    /**
+     * Показывать ли лоадер вместо текста
+     */
     loading: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Выключить ли кнопку, сделать ли неактивной
+     */
     disabled: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Является ли кнопка - кнопкой с иконкой.
+     * Если является, то слот автоматически будет вставлен в AppMdiIcon
+     */
     icon: {
       type: Boolean,
       default: false,
     },
+    /**
+     * 'Опасная' стилистика кнопки
+     */
     warning: {
       type: Boolean,
       default: false,
     },
   },
   computed: {
+    /**
+     * Формирование списка классов из props в формате app-button--{style}
+     */
     classes() {
       return Object.entries(this.$props)
         .reduce((prev, [key, value]) => {
@@ -52,6 +71,9 @@ export default {
           return prev;
         }, {});
     },
+    /**
+     * Цвет иконки/лоадера
+     */
     iconColor() {
       // eslint-disable-next-line no-nested-ternary
       return this.disabled
@@ -96,8 +118,6 @@ $shadow: 3px
   align-items: center
   justify-content: center
   padding: 8px
-  // background: colors.$primary
-  // color: white
   cursor: pointer
   font-size: 14px
   font-weight: 600
@@ -105,11 +125,7 @@ $shadow: 3px
   user-select: none
 
   &:not(.app-button--icon)
-    // $transition: all .05s easings.$out-quad
-    // transition: $transition
-
     &:active
-      // box-shadow: 0 0 0
       transform: translateY($shadow)
       &:after
         bottom: 0
@@ -121,7 +137,6 @@ $shadow: 3px
       left: 0
       right: 0
       bottom: -$shadow
-      // transition: $transition
 
   &--icon
     @include round-corners(50%)

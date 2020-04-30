@@ -22,21 +22,14 @@
 export default {
   name: 'App',
   data: () => ({
+    // Флаг того, что происходит первоначальная загрузка данных
     isFetching: false,
-    transitionName: 'app-route-appear-transition',
   }),
-  watch: {
-    $route(val) {
-      if (val.name === 'edit-note') {
-        this.transitionName = 'home-editor-transition';
-      } else {
-        this.transitionName = 'editor-home-transition';
-      }
-    },
-  },
   async created() {
     try {
       this.isFetching = true;
+
+      // Загрузка данных с сервера через хранилище
       await this.$store.dispatch('fetch');
     } finally {
       this.isFetching = false;

@@ -22,9 +22,15 @@
 </template>
 
 <script>
+/**
+ * Диалоговое окно
+ */
 export default {
   name: 'AppDialog',
   props: {
+    /**
+     * Открыть ли диалог
+     */
     value: {
       type: Boolean,
       required: true,
@@ -82,7 +88,4 @@ export default {
     &-enter, &-leave-to
       opacity: 0
       transform: scale(0.9)
-    // &-leave-to
-    //   opacity: 0
-    //   transform: scale(0.9)
 </style>

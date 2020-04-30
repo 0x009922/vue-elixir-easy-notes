@@ -9,6 +9,9 @@
 </template>
 
 <script>
+/**
+ * Чекбокс, вкл/выкл
+ */
 export default {
   name: 'AppCheckbox',
   props: {
