@@ -6,7 +6,7 @@
         class="ml-n1"
       >
         <app-button icon>
-          {{ mdiArrowLeft }}
+          arrow-left
         </app-button>
       </router-link>
 
@@ -19,7 +19,7 @@
         icon
         @click="undo()"
       >
-        {{ mdiUndo }}
+        undo
       </app-button>
 
       <app-button
@@ -28,7 +28,7 @@
         class="ml-2"
         @click="redo()"
       >
-        {{ mdiRedo }}
+        redo
       </app-button>
     </div>
 
@@ -68,7 +68,7 @@
           warning
           @click="removeTodo(todo.id), pushSnapshot()"
         >
-          {{ mdiDelete }}
+          delete
         </app-button>
       </div>
     </div>
@@ -123,7 +123,7 @@
           icon
           @click="confirmRemove = false"
         >
-          {{ mdiClose }}
+          close
         </app-button>
       </div>
 
@@ -163,7 +163,7 @@
           icon
           @click="confirmCancel = false"
         >
-          {{ mdiClose }}
+          close
         </app-button>
       </div>
 
@@ -192,13 +192,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import {
-  mdiDelete,
-  mdiRedo,
-  mdiUndo,
-  mdiArrowLeft,
-  mdiClose,
-} from '@mdi/js';
 import AppTodoInput from '@/components/AppTodoInput.vue';
 import AppDialog from '@/components/AppDialog.vue';
 
@@ -221,12 +214,6 @@ export default {
 
     isSaving: false,
     isRemoving: false,
-
-    mdiDelete,
-    mdiRedo,
-    mdiUndo,
-    mdiArrowLeft,
-    mdiClose,
   }),
   computed: {
     ...mapGetters([
@@ -266,6 +253,9 @@ export default {
           // Если есть сохранённые снимки состояния, то заменяю последний из них
           if (this.noteSnapshots.length) {
             this.noteSnapshots.splice(-1, 1, this.noteJSON);
+          } else {
+            // Иначе просто добавляю снимок
+            this.pushSnapshot();
           }
         }
       },

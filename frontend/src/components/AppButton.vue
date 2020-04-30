@@ -5,13 +5,13 @@
     :class="classes"
     v-on="$listeners"
   >
-    <app-icon
+    <app-mdi-icon
       v-if="icon"
       :color="iconColor"
       size="24"
     >
       <slot />
-    </app-icon>
+    </app-mdi-icon>
     <slot v-else />
 
     <div

@@ -17,17 +17,35 @@
     </div>
 
     <div class="app-note-preview__todos">
-      <app-todo-input
+      <template v-for="todo in shownTodos">
+        <div
+          :key="todo.id"
+          class="app-note-preview__todo d-flex align-center"
+        >
+          <app-mdi-icon color="disabled">
+            checkbox-{{ todo.done ? 'marked' : 'blank' }}-outline
+          </app-mdi-icon>
+
+          <div
+            :class="{ 'text--secondary': !todo.title }"
+            class="ml-2"
+          >
+            {{ todo.title || 'Пусто' }}
+          </div>
+        </div>
+      </template>
+
+      <!-- <app-todo-input
         v-for="todo in shownTodos"
         :key="todo.id"
         :value="todo"
         readonly
         class="app-note-preview__todo"
-      />
+      /> -->
 
       <div
         v-if="todos.length > todosLimit"
-        class="app-note-preview__more text--secondary mt-2"
+        class="app-note-preview__more text--secondary mt-2 pb-2"
       >
         Ещё пунктов: {{ todos.length - todosLimit }}
       </div>
@@ -37,13 +55,9 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import AppTodoInput from './AppTodoInput.vue';
 
 export default {
   name: 'AppNotePreview',
-  components: {
-    AppTodoInput,
-  },
   props: {
     title: {
       type: String,
@@ -79,4 +93,7 @@ export default {
   // padding: 8px 16px
   &__more
     font-size: 0.9em
+
+  &__todo + .app-note-preview__todo
+    margin-top: 8px
 </style>

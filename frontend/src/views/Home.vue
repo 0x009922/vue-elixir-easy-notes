@@ -34,7 +34,7 @@
             <template #actions>
               <router-link :to="{ name: 'edit-note', params: { id: note.id } }">
                 <app-button icon>
-                  {{ mdiPencil }}
+                  pencil
                 </app-button>
               </router-link>
 
@@ -44,7 +44,7 @@
                 warning
                 @click="removeId = note.id"
               >
-                {{ mdiDelete }}
+                delete
               </app-button>
             </template>
           </app-note-preview>
@@ -71,7 +71,7 @@
           icon
           @click="removeId = null"
         >
-          {{ mdiClose }}
+          close
         </app-button>
       </div>
 
@@ -94,7 +94,6 @@
 
 <script>
 import { mapState } from 'vuex';
-import { mdiDelete, mdiPencil, mdiClose } from '@mdi/js';
 import AppNotePreview from '@/components/AppNotePreview.vue';
 import AppDialog from '@/components/AppDialog.vue';
 
@@ -109,10 +108,6 @@ export default {
 
     removeId: null,
     isRemoving: false,
-
-    mdiDelete,
-    mdiPencil,
-    mdiClose,
   }),
   computed: {
     ...mapState([

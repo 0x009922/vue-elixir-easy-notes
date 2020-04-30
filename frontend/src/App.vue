@@ -3,10 +3,11 @@
     id="app"
     class="d-flex align-center justify-center"
   >
-    <transition :name="transitionName">
+    <transition name="app__content-transition" mode="out-in">
       <app-loading
         :value="isFetching"
         size="40"
+        color="white"
       >
         <router-view />
       </app-loading>
@@ -48,47 +49,16 @@ export default {
 #app
   height: 100vh
   background: colors.$background
-  perspective: 1000px
 
-.app-route-appear-transition
+.app__content-transition
   &-enter-active
-    transition: all .3s easings.$out-quart
+    transition: all .35s easings.$out-quart
   &-leave-active
-    // transition: all .4s ease
-    position: absolute
+    transition: all .15s easings.$in-quart
   &-enter
-    // box-shadow: none
-    transform: translateZ(-50px)
+    transform: translateY(20px)
     opacity: 0
   &-leave-to
     opacity: 0
-    transform: translateX(100px)
-
-$dur: .4s
-
-.home-editor-transition
-  &-enter-active
-    transition: all $dur .3s easings.$out-quart
-  &-leave-active
-    transition: all $dur easings.$in-quart
-    position: absolute
-  &-enter
-    opacity: 0
-    transform: translateX(100px)
-  &-leave-to
-    transform: translateX(-100px)
-    opacity: 0
-
-.editor-home-transition
-  &-enter-active
-    transition: all $dur .3s easings.$out-quart
-  &-leave-active
-    transition: all $dur easings.$in-quart
-    position: absolute
-  &-leave-to
-    opacity: 0
-    transform: translateX(100px)
-  &-enter
-    transform: translateX(-100px)
-    opacity: 0
+    transform: scale(0.95)
 </style>

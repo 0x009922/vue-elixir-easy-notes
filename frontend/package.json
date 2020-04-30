@@ -8,9 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@mdi/js": "^5.1.45",
     "axios": "^0.19.2",
-    "lodash": "^4.17.15",
     "vue": "^2.6.11",
     "vue-functional-data-merge": "^3.1.0",
     "vue-router": "^3.1.6",

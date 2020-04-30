@@ -7,11 +7,11 @@
   >
     <input
       v-if="!readonly"
-      :value="value"
+      :value="lazyValue"
       v-bind="$attrs"
-      @input="debouncedUpdate($event.target.value)"
+      @input="lazyUpdate($event.target.value)"
       @focus="isFocused = true"
-      @blur="isFocused = false"
+      @blur="onBlur(), isFocused = false"
     >
     <div
       v-else
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import debounce from 'lodash/debounce';
+const UPDATE_DELAY = 400;
 
 export default {
   name: 'AppInput',
@@ -48,7 +48,6 @@ export default {
     value: {
       type: [String, Number],
       default: null,
-      // required: true,
     },
     readonly: {
       type: Boolean,
@@ -57,11 +56,37 @@ export default {
   },
   data: () => ({
     isFocused: false,
+
+    lazyValue: null,
+    updateTimer: null,
   }),
+  watch: {
+    value: {
+      immediate: true,
+      handler(val) {
+        this.lazyValue = val;
+      },
+    },
+  },
   methods: {
-    debouncedUpdate: debounce(function (val) {
-      this.$emit('input', val);
-    }, 300),
+    lazyUpdate(val) {
+      this.lazyValue = val;
+      if (this.updateTimer) {
+        clearTimeout(this.updateTimer);
+      }
+      this.updateTimer = setTimeout(this.update, UPDATE_DELAY);
+    },
+    onBlur() {
+      if (this.updateTimer) {
+        clearTimeout(this.updateTimer);
+        this.updateTimer = null;
+        this.update();
+      }
+    },
+    update() {
+      this.$emit('input', this.lazyValue);
+      this.updateTimer = null;
+    },
   },
 };
 </script>
