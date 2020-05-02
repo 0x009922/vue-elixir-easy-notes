@@ -1,9 +1,32 @@
 # vue-elixir-easy-notes
 
-### Запуск
+### Запуск через `docker-compose`
 
   1. `docker-compose up`
   2. Открыть в браузере http://localhost:5000
+
+***Желательно делать это не на Windows.***
+
+### Запуск в режиме разработки
+
+Нужно установить:
+
+  - PostgreSQL, с паролем у пользователя postgres = postgres (либо каким угодно другим пользователем и паролем, и прописать их в конфиге бэкенда в файле `backend/config/dev.exs`)
+  - Elixir: https://elixir-lang.org/install.html
+  - node.js и npm
+
+В папке `backend` выполнить (возможен запрос подтверждений):
+```sh
+mix do deps.get, ecto.create, ecto.migrate, phx.server
+```
+
+В папке `frontend` выполнить:
+```sh
+npm install
+npm run serve
+```
+
+Открыть в браузере http://localhost:8080
 
 ### Замечания
 
